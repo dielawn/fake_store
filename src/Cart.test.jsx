@@ -14,8 +14,23 @@ describe('Cart', () => {
       fireEvent.click(screen.getByText('Add to Cart'))
 
       //check if item was added to cart
-      const cartItem = await screen.findByText(/Test Item - 1/)
+      const cartItem = await screen.findByText(/Test Item/)
       expect(cartItem).toBeInTheDocument()
+
+
         
     });
+    it('adjusts qty of item in cart', async () => {
+        render(<Cart />)
+
+       
+        fireEvent.click(screen.getByText('Select Item'))
+        fireEvent.click(screen.getByText('Add to Cart'))
+        //adjust input value
+        const qtyInput = screen.getByDisplayValue('1')
+        fireEvent.change(qtyInput, {target: {value: '2'}})
+        expect(qtyInput.value).toBe('2')
+        fireEvent.change(qtyInput, {target: {value: '1'}})
+        expect(qtyInput.value).toBe('1')
+    })
   });

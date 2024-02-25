@@ -8,10 +8,16 @@ export function Cart() {
 
     function addToCart() {
        if (item.name != '') {
-        setCart((prevItems) => [
-            ...prevItems, 
-            item
-        ])
+        setCart((prevItems) => {
+            const itemIndex = prevItems.findIndex(i => i.id === item.id)
+            if (itemIndex > -1) {
+                const newItems = [...prevItems]
+                newItems[itemIndex].qty += item.qty
+                return newItems
+            } else {
+                return [...prevItems, item]
+            }
+        })
        }
     }
 
@@ -19,8 +25,15 @@ export function Cart() {
         setItem({ name: 'Test Item', price: 10, qty: 1 })
     }
 
-    function adjustQty() {
-        
+    function adjustQty(id, newQty) {
+        setCart((prevItems) => {
+            return prevItems.map(item => {
+                if (item.id === id) {
+                    return {...item, qty: parseInt(newQty, 10)}
+                }
+                return item
+            })
+        })
     }
 
 
@@ -32,7 +45,15 @@ export function Cart() {
             <button onClick={addToCart}>Add to Cart</button>
             
             {cart.map((item, index) => (
-                <div key={item.id}>{item.name} - {item.qty}</div>
+                <div key={item.id}>
+                    <p>{item.name}</p>
+                    <label>Qty: 
+                        <input 
+                            type="number"
+                            value={item.qty}
+                            onChange={(e) => adjustQty(item.id, e.target.value)} />
+                    </label>
+                </div>
             ))}
         </div>
     )
