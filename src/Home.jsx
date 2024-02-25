@@ -1,2 +1,8 @@
 import './Home.css'
-//nav bar, image, info
+const todo = 'nav bar, image, info'
+
+export function Home() {
+    return (
+        <p>{todo}</p>
+    )
+}
