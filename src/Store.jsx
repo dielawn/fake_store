@@ -36,12 +36,12 @@ export function Store() {
     return (
         <div>
             {inventory && inventory.map((item) => (
-                (
-                <div key={item.id} className='itemCard'>
+                
+                <div key={item.title.splice(1, 3)} className='itemCard'>
                     <img src={item.image} alt={item.title} />
                     <p>{item.title}</p>
                     <p>${item.price.toFixed(2)}</p>
-                </div>)
+                </div>
             ))}
         </div>
     )

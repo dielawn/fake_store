@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach } from 'vitest';
 import {Store} from './Store'
 import axios from 'axios';
@@ -16,17 +16,19 @@ vi.mock('axios', () => ({
       vi.resetAllMocks()
     })
   
-    it('displays loading state initially', async () => {
+    it('displays loading state initially', async () => {        
         
-        axios.get.mockResolvedValueOnce({ data: [] })
-        render(<Store />)
-        expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
+        await waitFor(() => {
+            axios.get.mockResolvedValueOnce({ data: [] })
+            render(<Store />)
+            expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
+          })
+        
       })  
   
     it('displays error message on fetch failure', async () => {
       // Adjust the mock for this specific test to simulate a rejection
-      axios.get.mockRejectedValue(new Error('Failed to fetch'))
-  
+      axios.get.mockRejectedValue(new Error('Failed to fetch'))  
       render(<Store />);
       const errorElement = await screen.findByText(/Error:/i)
       expect(errorElement).toBeInTheDocument()
@@ -46,21 +48,21 @@ vi.mock('axios', () => ({
               rating: { rate: 3.9, count: 120 }
             }
           })
-        );
+        )
       
-        render(<Store />);
+        render(<Store />)
       
         // Wait for the items to be fetched and rendered
         await waitFor(() => {
-          // Check for the presence of multiple items based on the mocked fetch
-          // Adjust this based on the actual number of items you expect to fetch and render
+          //check for the presence of multiple items based on the mocked fetch
+          //adjust this based on the actual number of items you expect to fetch and render
           [...Array(20).keys()].forEach(async (i) => {
-            const itemTitle = await screen.findByText(new RegExp("Test Item " + (i + 1), "i"));
-            expect(itemTitle).toBeInTheDocument();
-          });
-        });
-      });
-      
+            const itemTitle = await screen.findByText(new RegExp("Test Item " + (i + 1), "i"))
+            expect(itemTitle).toBeInTheDocument()
+            
+          })
+        })
+      })
       
   })
   
