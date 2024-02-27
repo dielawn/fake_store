@@ -17,13 +17,12 @@ vi.mock('axios', () => ({
     })
   
     it('displays loading state initially', async () => {        
-        
+
         await waitFor(() => {
             axios.get.mockResolvedValueOnce({ data: [] })
             render(<Store />)
             expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
-          })
-        
+          })        
       })  
   
     it('displays error message on fetch failure', async () => {
@@ -59,7 +58,7 @@ vi.mock('axios', () => ({
           [...Array(20).keys()].forEach(async (i) => {
             const itemTitle = await screen.findByText(new RegExp("Test Item " + (i + 1), "i"))
             expect(itemTitle).toBeInTheDocument()
-            
+          
           })
         })
       })

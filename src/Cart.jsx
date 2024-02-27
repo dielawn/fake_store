@@ -2,9 +2,17 @@ import { useEffect, useState } from 'react'
 import './Cart.css'
 const todo = `drop down menu child of nav, cart icon, cart qty, adjust qty, remove item, checkout btn`
 
-export function Cart() {
+export default function Cart() {
     const [cart, setCart] = useState([])
-    const [item, setItem] = useState({name: '', price: 0, qty: 0, id: null, })
+    const [item, setItem] = useState({
+        id: null,
+        title: null,
+        price: null,
+        description: null,
+        category: null,
+        image: null,
+        rating: { rate: null, count: null}
+      })
 
     function addToCart() {
        if (item.name != '') {
@@ -53,6 +61,7 @@ export function Cart() {
                             value={item.qty}
                             onChange={(e) => adjustQty(item.id, e.target.value)} />
                     </label>
+                    <button>Remove</button>
                 </div>
             ))}
         </div>

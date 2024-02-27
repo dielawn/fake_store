@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 
 export function Store() {
     const [inventory, setInventory] = useState([])
+    const [cart, setCart] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
     
@@ -35,12 +36,12 @@ export function Store() {
  
     return (
         <div>
-            {inventory && inventory.map((item) => (
-                
-                <div key={item.title.splice(1, 3)} className='itemCard'>
+            {inventory && inventory.map((item) => (                
+                <div key={item.title.slice(0, 4)} className='itemCard'>
                     <img src={item.image} alt={item.title} />
                     <p>{item.title}</p>
                     <p>${item.price.toFixed(2)}</p>
+                    <button>Add to Cart</button>
                 </div>
             ))}
         </div>
