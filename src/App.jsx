@@ -8,8 +8,7 @@ function App() {
 
   return (
     <>
-    <Nav />
-    <h1>Our First Test</h1>
+   
     <Home />
     {/* <Store />
     <Cart /> */}

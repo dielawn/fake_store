@@ -1,6 +1,7 @@
 import './Store.css'
 import axios from 'axios'
 import { useState, useEffect } from "react";
+import { Nav } from './Nav';
 
 
 // const todo =  `nav bar, item cards- title, qty(input), price, add to cart btn`
@@ -35,7 +36,10 @@ export function Store() {
     if (error) return <p>Error: {error}</p>
  
     return (
-        <div className='productsDiv'>
+
+       <div>
+        <Nav />
+         <div className='productsDiv'>
             {inventory && inventory.map((item) => (                
                 <div key={item.title.slice(0, 4) + item.id} className='itemCard'>
                     <img src={item.image} alt={item.title} className='productImg' />
@@ -45,6 +49,7 @@ export function Store() {
                 </div>
             ))}
         </div>
+       </div>
     )
     
 }

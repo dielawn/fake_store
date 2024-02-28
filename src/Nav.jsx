@@ -6,9 +6,9 @@ export function Nav() {
     return (
         <>
             <p>{todo}</p>
-            <Link to='home'>Home</Link>
-            <Link to="store">Store</Link>
-            <Link to='cart'>Cart</Link>
+            <Link to='/home'>Home</Link>
+            <Link to="/store">Store</Link>
+            <Link to='/cart'>Cart</Link>
         </>        
     )
 }
