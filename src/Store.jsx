@@ -35,10 +35,10 @@ export function Store() {
     if (error) return <p>Error: {error}</p>
  
     return (
-        <div>
+        <div className='productsDiv'>
             {inventory && inventory.map((item) => (                
                 <div key={item.title.slice(0, 4) + item.id} className='itemCard'>
-                    <img src={item.image} alt={item.title} />
+                    <img src={item.image} alt={item.title} className='productImg' />
                     <p>{item.title}</p>
                     <p>${item.price.toFixed(2)}</p>
                     <button>Add to Cart</button>
