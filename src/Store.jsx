@@ -37,7 +37,7 @@ export function Store() {
     return (
         <div>
             {inventory && inventory.map((item) => (                
-                <div key={item.title.slice(0, 4)} className='itemCard'>
+                <div key={item.title.slice(0, 4) + item.id} className='itemCard'>
                     <img src={item.image} alt={item.title} />
                     <p>{item.title}</p>
                     <p>${item.price.toFixed(2)}</p>
