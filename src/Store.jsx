@@ -11,6 +11,9 @@ export function Store() {
     const [cart, setCart] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
+    const [qty, setQty] = useState(1)
+
+
     
     useEffect(() => {
         const ids = [...Array(20).keys()].map(i => i + 1)
@@ -45,6 +48,15 @@ export function Store() {
                     <img src={item.image} alt={item.title} className='productImg' />
                     <p>{item.title}</p>
                     <p>${item.price.toFixed(2)}</p>
+                    <label htmlFor="qtyInput">Qty 
+                    <input 
+                        type="number"
+                        id='qtyInput'
+                        className='qtyInput'
+                        value={qty}
+                        onChange={(e) => setQty(e.target.value)}
+                         />
+                    </label>
                     <button>Add to Cart</button>
                 </div>
             ))}

@@ -29,6 +29,10 @@ export default function Cart() {
        }
     }
 
+    useEffect(() => {
+        addToCart()
+    }, [item])
+
     function selectItem() {
         setItem({ name: 'Test Item', price: 10, qty: 1 })
     }
@@ -50,7 +54,7 @@ export default function Cart() {
         
         <div>
             <button onClick={selectItem}>Select Item</button>
-            <button onClick={addToCart}>Add to Cart</button>
+            <button>Remove</button>
             
             {cart.map((item, index) => (
                 <div key={item.id}>
@@ -61,7 +65,8 @@ export default function Cart() {
                             value={item.qty}
                             onChange={(e) => adjustQty(item.id, e.target.value)} />
                     </label>
-                    <button>Remove</button>
+                    <button onClick={selectItem}>Add to Cart</button>
+                    
                 </div>
             ))}
         </div>

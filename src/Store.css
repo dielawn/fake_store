@@ -21,3 +21,13 @@
     max-width: 200px;
     max-height: 150px;
 }
+
+.qtyInput {
+    
+    max-width: 30px;
+    padding: 5px;
+    margin: 5px;
+    border-radius: 7px;
+    align-items: center;
+    text-align: center;
+}
