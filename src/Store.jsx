@@ -34,7 +34,7 @@ export function Store() {
 
         fetchItems()
     }, [])
-
+    console.log(inventory)
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
  
@@ -48,10 +48,10 @@ export function Store() {
                     <img src={item.image} alt={item.title} className='productImg' />
                     <p>{item.title}</p>
                     <p>${item.price.toFixed(2)}</p>
-                    <label htmlFor="qtyInput">Qty 
+                    <label htmlFor={'qtyInput' + item.id}>Qty 
                     <input 
                         type="number"
-                        id='qtyInput'
+                        id={'qtyInput' + item.id}
                         className='qtyInput'
                         value={qty}
                         onChange={(e) => setQty(e.target.value)}
