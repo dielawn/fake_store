@@ -11,6 +11,9 @@ export function Store() {
     const [cart, setCart] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
+
+    const expandIcon = 'expand_more'
+    const colapseIcon = 'expand_less' 
    
 
     function setQty(e, itemId) {
@@ -65,10 +68,16 @@ export function Store() {
                 <div key={item.title.slice(0, 4) + item.id} className='itemCard'>
                     <img src={item.image} alt={item.title} className='productImg' />
                     <p>{item.title}</p>
-                    <button
-                        onClick={() => handleDiscVis(item.id)}><span className="material-symbols-outlined">expand_more</span></button>
+                    {item.isDescVis && <p>{item.description}</p>}
+                    <button onClick={() => handleDiscVis(item.id)}>
+                    {item.isDescVis ? 
+                        <span className="material-symbols-outlined" >expand_less</span> 
+                        : 
+                        <>{item.description.slice(0, 20) + '...'}<span className="material-symbols-outlined" > expand_more</span></>}
+                    </button>
+                 
                   
-                        {item.isDescVis && <p>{item.description}</p>}
+                        
                    
                     <p>${item.price.toFixed(2)}</p>
                     <label htmlFor={'qtyInput' + item.id}>Qty 
