@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-   
+   <Nav />
     <Home />
     {/* <Store />
     <Cart /> */}

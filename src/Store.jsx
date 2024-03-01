@@ -11,10 +11,7 @@ export function Store() {
     const [cart, setCart] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
-
-    const expandIcon = 'expand_more'
-    const colapseIcon = 'expand_less' 
-   
+     
 
     function setQty(e, itemId) {
         setInventory(prevInv => prevInv.map(item => 
