@@ -11,9 +11,20 @@ export function Store() {
     const [cart, setCart] = useState([])
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
-    const [qty, setQty] = useState(1)
+   
 
+    function setQty(e, itemId) {
+        setInventory(prevInv => prevInv.map(item => 
+            item.id === itemId ? {...item, qty: Number(e.target.value)} : item
+        ))
+    }
 
+    function handleDiscVis(itemId) {
+        setInventory(prevInv => prevInv.map(item => 
+            item.id === itemId ? {...item, isDescVis: !item.isDescVis} : item))
+    }
+
+ 
     
     useEffect(() => {
         const ids = [...Array(20).keys()].map(i => i + 1)
@@ -22,7 +33,11 @@ export function Store() {
                 const response = await Promise.all(
                     ids.map(id => axios.get(`https://fakestoreapi.com/products/${id}`))
                 ) 
-                const newItem = response.map(res => res.data);
+                const newItem = response.map(res => ({
+                    ...res.data,
+                    qty: 1,
+                    isDescVis: false,
+                }))
 
                 setInventory(newItem)
             } catch (err) {
@@ -35,6 +50,9 @@ export function Store() {
         fetchItems()
     }, [])
     console.log(inventory)
+
+
+    
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
  
@@ -47,14 +65,19 @@ export function Store() {
                 <div key={item.title.slice(0, 4) + item.id} className='itemCard'>
                     <img src={item.image} alt={item.title} className='productImg' />
                     <p>{item.title}</p>
+                    <button
+                        onClick={() => handleDiscVis(item.id)}><span className="material-symbols-outlined">expand_more</span></button>
+                  
+                        {item.isDescVis && <p>{item.description}</p>}
+                   
                     <p>${item.price.toFixed(2)}</p>
                     <label htmlFor={'qtyInput' + item.id}>Qty 
                     <input 
                         type="number"
                         id={'qtyInput' + item.id}
                         className='qtyInput'
-                        value={qty}
-                        onChange={(e) => setQty(e.target.value)}
+                        value={item.qty}
+                        onChange={(e) => setQty(e, item.id)}
                          />
                     </label>
                     <button>Add to Cart</button>
