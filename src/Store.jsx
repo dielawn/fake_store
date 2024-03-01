@@ -52,9 +52,7 @@ export function Store() {
 
         fetchItems()
     }, [])
-    console.log(inventory)
-
-
+    
     
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
@@ -69,11 +67,11 @@ export function Store() {
                     <img src={item.image} alt={item.title} className='productImg' />
                     <p>{item.title}</p>
                     {item.isDescVis && <p>{item.description}</p>}
-                    <button onClick={() => handleDiscVis(item.id)}>
+                    <button className='descShowHideBtn' onClick={() => handleDiscVis(item.id)}>
                     {item.isDescVis ? 
                         <span className="material-symbols-outlined" >expand_less</span> 
                         : 
-                        <>{item.description.slice(0, 20) + '...'}<span className="material-symbols-outlined" > expand_more</span></>}
+                        <>{item.description.slice(0, 20) + '...'}<span className="material-symbols-outlined" >expand_more</span></>}
                     </button>
                  
                   

@@ -31,3 +31,11 @@
     align-items: center;
     text-align: center;
 }
+
+.descShowHideBtn {
+    background-color: transparent;
+    color: #000;
+    outline: none;
+    border: none;
+} 
+

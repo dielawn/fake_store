@@ -1,0 +1,19 @@
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.navBar {
+    position: sticky;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.956);
+    z-index: 1000;
+    padding: 25px;
+}
+
+.navLink {
+    
+    padding: 20px;
+   
+}
+

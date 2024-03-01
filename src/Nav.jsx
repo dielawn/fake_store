@@ -1,14 +1,15 @@
 import { Link } from 'react-router-dom'
 import './Nav.css'
-const todo =  `links to home, store, cart icon w/qty,`
+
 
 export function Nav() {
     return (
-        <>
-            <p>{todo}</p>
-            <Link to='/home'>Home</Link>
-            <Link to="/store">Store</Link>
+        <div className='flex navBar'>
+            <div>
+                <Link className='navLink' to='/home'>Home</Link>
+                <Link className='navLink' to="/store">Store</Link>
+            </div>
             <Link to='/cart'>Cart</Link>
-        </>        
+        </div>        
     )
 }
