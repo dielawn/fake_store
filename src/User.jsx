@@ -6,7 +6,7 @@ export default class User extends Component {
         super(props)
 
         this.state = {
-            name: null,
+            name: props.userName || 'Please Login',
             cart: [],
             isCartVis: false,
             total: 0,
@@ -73,14 +73,14 @@ export default class User extends Component {
      }
 
      setCartVis() {
-        this.setState(prevState => ({...prevState, isCartVis: !isCartVis}))
-     }
-
+        this.setState(prevState => ({...prevState, isCartVis: !prevState.isCartVis}))
+    }
+    
      render() {
         return (
             <>
                 {this.state.name && (
-                    <div>
+                    <div className="cartIcon">
                        <h3>{this.state.name}</h3>     
                        <button
                         onClick={() => this.setCartVis()}
@@ -88,6 +88,7 @@ export default class User extends Component {
                          </button>                   
                     </div>
                 )}
+                <div  className="cartDiv">
                 {this.isCartVis && this.cart.map((item) => (
                     <div>
                         <p>{item.title.slice(0, 11)} {item.price * item.qty}</p>
@@ -96,11 +97,14 @@ export default class User extends Component {
                             value={item.qty}
                             onChange={(e) => this.adjustItemQty(item, e.target.value)}
                         />
+                        <button
+                            onClick={this.removeFromCart(item)}> ❌ </button>
                         
                     </div>
                 ))}
-                {this.}
-            
+                {/* if there is stuff in the cart display the qty */}
+                {this.state.cart.length >= 1 && <p>{this.state.cart.length}</p>}
+                </div>
             </>
         )
      }
