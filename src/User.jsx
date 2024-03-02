@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import './User.css'
+import UserContext from './UserContext';
 
 export default class User extends Component {
     constructor(props) {
@@ -10,6 +11,7 @@ export default class User extends Component {
             cart: props.cart || [],
             isCartVis: false,
             total: 0,
+            setFunc: props.removeFromAppCart
         }
     }
 
@@ -43,6 +45,7 @@ export default class User extends Component {
             if (itemIndex !== -1) { 
                 const newCart = [...prevState.cart];
                 newCart.splice(itemIndex, 1)
+                this.props.removeFromAppCart(item)
                 return { cart: newCart }
             }
         })

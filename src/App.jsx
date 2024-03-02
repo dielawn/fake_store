@@ -1,5 +1,5 @@
 import './App.css'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Router from './Router'; // Make sure to import Router
 import UserContext from './UserContext';
 
@@ -27,9 +27,21 @@ function App() {
        
     }
 
+    function removeFromAppCart(itemToRemove) {
+      setCart((prevState) => {
+        const itemIndex = prevState.findIndex(i => i.id === itemToRemove.id)
+        if (itemIndex === -1) {
+          //item not found do nothing
+          return prevState
+        }
+        const newCart = [...prevState]
+        newCart.splice(itemIndex, 1)//remove the item
+        return newCart
+      })
+    }
+    
 
-
-
+   
     function adjustQty(id, newQty) {
         setCart((prevItems) => {
             return prevItems.map(item => {
@@ -54,6 +66,7 @@ function App() {
       cart,
       addToCart, 
       adjustQty,
+      removeFromAppCart,
 
       }}>
       <Router /> {/* Router is now inside UserContext.Provider */}
