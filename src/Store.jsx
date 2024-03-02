@@ -8,7 +8,9 @@ import UserContext from './UserContext';
 // const todo =  `nav bar, item cards- title, qty(input), price, add to cart btn`
 
 export function Store() {
-    const [inventory, setInventory] = useState([])
+    // const [inventory, setInventory] = useState([])
+    const {inventory} = useContext(UserContext)
+    const {setInventory} = useContext(UserContext)
     const {userName} = useContext(UserContext)
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
