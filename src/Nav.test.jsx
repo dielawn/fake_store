@@ -1,20 +1,60 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import { MemoryRouter } from 'react-router-dom'; 
+import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
+import { Nav } from './Nav';
+import UserContext from './UserContext';
 
-import {Nav} from './Nav'
+const customRender = (ui, { providerProps, ...options }) => {
+  return render(
+    <MemoryRouter>
+      <UserContext.Provider value={providerProps}>{ui}</UserContext.Provider>
+    </MemoryRouter>,
+    options
+  )
+}
 
-describe('Nav', () => {
-    it('renders expected links and a paragraph', () => {
-      render(<MemoryRouter><Nav /></MemoryRouter>)
+describe('Nav component', () => {
+  it('renders navigation links', () => {
+    const providerProps = {
+      userName: '',
+      cart: [],
+      setUserName: jest.fn(),
+      removeFromAppCart: jest.fn(),
+    }
+    customRender(<Nav />, { providerProps })
+  
+    expect(screen.getByText(/home/i)).toBeInTheDocument()
+    expect(screen.getByText(/store/i)).toBeInTheDocument()
+  })
 
-      const todoParagraph = screen.getByText(/links to home, shop, cart icon w\/qty,/i);
-      expect(todoParagraph).toBeInTheDocument()
-
-      expect(screen.getByText('Home')).toBeInTheDocument();
-      expect(screen.getByText('Store')).toBeInTheDocument();
-      expect(screen.getByText('Cart')).toBeInTheDocument();  
-    
-
-    });
-  });
+  it('allows the user to log in', async () => {
+    const setUserName = jest.fn();
+    const providerProps = {
+      userName: '',
+      cart: [],
+      setUserName,
+      removeFromAppCart: jest.fn(),
+    }
+    customRender(<Nav />, { providerProps })
+  
+    const input = screen.getByLabelText(/user name:/i)
+    const loginButton = screen.getByRole('button', { name: /login/i })
+  
+    await userEvent.type(input, 'John Doe')
+    await userEvent.click(loginButton)
+  
+    expect(setUserName).toHaveBeenCalledWith('John Doe')
+  })
+  
+  it('renders the User component when userName is provided', () => {
+    const providerProps = {
+      userName: 'John Doe',
+      cart: [],
+      setUserName: jest.fn(),
+      removeFromAppCart: jest.fn(),
+    }
+    customRender(<Nav />, { providerProps })
+  
+    expect(screen.queryByLabelText(/user name:/i)).not.toBeInTheDocument()
+    expect(screen.getByText('John Doe')).toBeInTheDocument()
+  })
+})
