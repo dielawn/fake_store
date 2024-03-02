@@ -64,6 +64,14 @@ export default class User extends Component {
         console.log('cart vis changed')
         this.setState(prevState => ({...prevState, isCartVis: !prevState.isCartVis}))
     }
+
+    getCartQty() {
+        let itemTotal = 0
+        for (const item of this.state.cart) {
+            itemTotal += item.qty
+        }
+        return itemTotal
+    }
     
     render() {
         return (
@@ -75,8 +83,7 @@ export default class User extends Component {
                         onClick={() => this.setCartVis()}
                         className="material-symbols-outlined white">shopping_cart
                          </button>      
-                {this.state.cart.length >= 1 && <p className="qtyTxt">{this.state.cart.length}</p>}             
-                
+                {this.state.cart.length >= 1 && <p className="qtyTxt">{this.getCartQty()}</p>}
                     </div>
                 )}
                 <div className="cartDiv">
@@ -85,6 +92,7 @@ export default class User extends Component {
                         
                         <img className="cartImage" src={item.image} alt={item.title} />
                         <p>{item.title.slice(0, 11)} {item.price * item.qty}</p>
+                       
                         <input 
                             type="number"
                             value={item.qty}

@@ -13,7 +13,7 @@ function App() {
 
     function addToCart(item) {
       console.log(`${item.id} added to cart`)
-       if (item.title != '') {
+       
         setCart((prevItems) => {
             const itemIndex = prevItems.findIndex(i => i.id === item.id)
             if (itemIndex > -1) {
@@ -24,7 +24,7 @@ function App() {
                 return [...prevItems, item]
             }
         })
-       }
+       
     }
 
 

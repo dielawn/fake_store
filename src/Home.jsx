@@ -55,6 +55,7 @@ export default function Home() {
       <h1>Fakest of Stores</h1>
 
         <p>Welcome to the fake store! We have all the fakest products at a prices you wouldn't want to pay if you could!</p>
+        <h3>Please login to view cart. You can type anything!</h3>
         <div className='carouselDiv'>
         {inventory && inventory.length > 0 && (
         <img
