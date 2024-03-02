@@ -35,4 +35,6 @@
     outline: none;
     border: none;
 } 
-
+ .headerTxt {
+    text-align: center;
+ }

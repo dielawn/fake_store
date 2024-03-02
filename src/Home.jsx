@@ -10,10 +10,10 @@ export default function Home() {
   const {inventory} = useContext(UserContext)
   const {setInventory} = useContext(UserContext)
   const {setLoading} = useContext(UserContext)
+  const {loading} = useContext(UserContext)
+  const {error} = useContext(UserContext)
   const {setError} = useContext(UserContext)
 
-  // const [loading, setLoading] = useState(true)
-  // const [error, setError] =  useState(null)
 
   const  [currentIndex, setCurrentIndex] = useState(0)
 
@@ -50,6 +50,9 @@ export default function Home() {
 
     return () => clearInterval(interval)
   }, [inventory.length])
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error: {error}</p>
 
     return (
        <div>

@@ -1,21 +1,17 @@
 import './Store.css'
-import axios from 'axios'
-import { useState, useEffect, useContext } from "react";
+import {  useContext } from "react";
 import { Nav } from './Nav';
 import UserContext from './UserContext';
 
 export function Store() {
-    // const [inventory, setInventory] = useState([])
+  
     const {inventory} = useContext(UserContext)
     const {setInventory} = useContext(UserContext)
     const {userName} = useContext(UserContext)
 
     const {loading} = useContext(UserContext)
     const {error} = useContext(UserContext)
-    // const [loading, setLoading] = useState(true)
-    // const [error, setError] =  useState(null)
      
-
     function setQty(e, itemId) {
         setInventory(prevInv => prevInv.map(item => 
             item.id === itemId ? {...item, qty: Number(e.target.value)} : item
@@ -26,19 +22,16 @@ export function Store() {
         setInventory(prevInv => prevInv.map(item => 
             item.id === itemId ? {...item, isDescVis: !item.isDescVis} : item))
     }
-
-     
-
-    
-    
+   
     if (loading) return <p>Loading...</p>
     if (error) return <p>Error: {error}</p>
  
     return (
-
        <div>
         <Nav userName={userName}/>
+        <h1 className='headerTxt'>Fakest of Stores</h1>
          <div className='productsDiv'>
+        
             {inventory && inventory.map((item) => (                
                 <div key={item.title.slice(0, 4) + item.id} className='itemCard'>
                     <img src={item.image} alt={item.title} className='productImg' />
