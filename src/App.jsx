@@ -10,10 +10,8 @@ function App() {
   const [error, setError] =  useState(null)
   const [cart, setCart] = useState([])
 
-
     function addToCart(item) {
-      console.log(`${item.id} added to cart`)
-       
+            
         setCart((prevItems) => {
             const itemIndex = prevItems.findIndex(i => i.id === item.id)
             if (itemIndex > -1) {
@@ -40,8 +38,6 @@ function App() {
       })
     }
     
-
-   
     function adjustQty(id, newQty) {
         setCart((prevItems) => {
             return prevItems.map(item => {
@@ -69,7 +65,7 @@ function App() {
       removeFromAppCart,
 
       }}>
-      <Router /> {/* Router is now inside UserContext.Provider */}
+      <Router /> 
     </UserContext.Provider>
   )
 }

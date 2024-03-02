@@ -4,12 +4,12 @@ import { Nav } from './Nav'
 import UserContext from './UserContext'
 import axios from 'axios'
 
-
 export default function Home() {
-  const {userName, inventory, setInventory, setLoading,loading, error, setError} = useContext(UserContext)
 
+  const {userName, inventory, setInventory, setLoading,loading, error, setError} = useContext(UserContext)
   const  [currentIndex, setCurrentIndex] = useState(0)
 
+  //on page load set inventory array 
   useEffect(() => {
     const ids = [...Array(20).keys()].map(i => i + 1)
     const fetchItems = async () => {
@@ -34,6 +34,7 @@ export default function Home() {
     fetchItems()
 }, [])
 
+//product images scroll every 3 sec loop
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) =>
@@ -48,25 +49,23 @@ export default function Home() {
   if (error) return <p>Error: {error}</p>
 
     return (
-       <div>
-        
-      <Nav userName={userName} />
-        <div className='homeDiv'>
-      <h1>Fakest of Stores</h1>
-
-        <p>Welcome to the fake store! We have all the fakest products at a prices you wouldn't want to pay if you could!</p>
-        <h3>Please login to view cart. You can type anything!</h3>
-        <div className='carouselDiv'>
-        {inventory && inventory.length > 0 && (
-        <img
-          key={inventory[currentIndex].title.slice(0, 4) + inventory[currentIndex].id}
-          src={inventory[currentIndex].image}
-          alt={inventory[currentIndex].title}
-          className='carouselImg'
-        />
-      )}
-        </div>
-        </div>
+       <div>        
+        <Nav userName={userName} />
+          <div className='homeDiv'>
+            <h1>Fakest of Stores</h1>
+            <p>Welcome to the fake store! We have all the fakest products at a prices you wouldn't want to pay if you could!</p>
+            <h3>Please login to view cart. You can type anything!</h3>
+            <div className='carouselDiv'>
+              {inventory && inventory.length > 0 && (
+                <img
+                  key={inventory[currentIndex].title.slice(0, 4) + inventory[currentIndex].id}
+                  src={inventory[currentIndex].image}
+                  alt={inventory[currentIndex].title}
+                  className='carouselImg'
+                />
+              )}
+            </div>
+          </div>
        </div>
     )
 }

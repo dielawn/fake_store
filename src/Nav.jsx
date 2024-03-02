@@ -23,13 +23,13 @@ export function Nav() {
                 :
                 <div className='flexColumn'>
                     <label className='userNameInput' htmlFor='userNameInput'>User Name:{' '} 
-                    <input 
-                        type='text'
-                        className='userNameInput'
-                        id='userNameInput'
-                        value={inputName}
-                        onChange={(e) => setInputName(e.target.value)}
-                    />                    
+                        <input 
+                            type='text'
+                            className='userNameInput'
+                            id='userNameInput'
+                            value={inputName}
+                            onChange={(e) => setInputName(e.target.value)}
+                        />                    
                     </label>
                     <button className='loginBtn' onClick={() => setUserName(inputName)}>Login</button>
                 </div>

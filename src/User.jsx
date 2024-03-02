@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import './User.css'
-import UserContext from './UserContext';
 
 export default class User extends Component {
     constructor(props) {
@@ -16,9 +15,11 @@ export default class User extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        //update the cart when App cart is updated
         if (prevProps.cart !== this.props.cart) {
             this.setState({cart: this.props.cart })
         }
+        //hide cart div if cart is empty
         if (this.props.cart.length <= 0 && this.state.isCartVis) {
             this.setState({ isCartVis: false })
         }
@@ -26,9 +27,8 @@ export default class User extends Component {
     
 
     adjustItemQty(item, newQty) {
-        
+        //adjust qty of cart item
         this.setState(prevState => {
-
             const itemIndex = prevState.cart.findIndex(i => i.id === item.id)
             if (itemIndex !== -1) {
                 const newCart = [...prevState.cart]
@@ -58,6 +58,7 @@ export default class User extends Component {
         this.setState(prevState => ({...prevState, name: name}))
      }
 
+     //multiplies qty by price of each item then sums totals
      getCartTotal() {
         let total = 0
         for (const item of this.state.cart) {
@@ -66,11 +67,12 @@ export default class User extends Component {
         return total.toFixed(2)
      }
 
+     //toggles cart contents visibility
      setCartVis() {
-        console.log('cart vis changed')
         this.setState(prevState => ({...prevState, isCartVis: !prevState.isCartVis}))
     }
 
+    //sums total number of items in cart accounting for qty of duplicate items
     getCartQty() {
         let itemTotal = 0
         for (const item of this.state.cart) {
@@ -86,29 +88,28 @@ export default class User extends Component {
                     <div className="flex userDiv">
                        <h3 className="userNameHeader">Welcome {this.state.name},</h3>     
                        <button
-                        onClick={() => this.setCartVis()}
-                        className="material-symbols-outlined white cartBtn" >shopping_cart
-                         </button>      
+                            onClick={() => this.setCartVis()}
+                            className="material-symbols-outlined white cartBtn" >shopping_cart
+                         </button>    
+                {/*if the cart is not empty display qty  */}
                 {this.state.cart.length >= 1 && <p className="qtyTxt">{this.getCartQty()}</p>}
                     </div>
                 )}
                 <div className="cartDiv">
-                {this.state.isCartVis && (<h3 className="totalTxt">Total ${this.getCartTotal()}</h3>)}
-                {this.state.isCartVis && this.state.cart.map((item) => (
-                    <div key={item.id} className="cartItemDiv"> 
-                        
-                        <img className="cartImage" src={item.image} alt={item.title} />
-                        <div className="cartInfo">
-                        <p>{item.title.slice(0, 9)}...  ${(item.price * item.qty).toFixed(2)} </p>
-                       
-                       <input 
-                           type="number"
-                           value={item.qty}
-                           className="qtyInput"
-                           onChange={(e) => this.adjustItemQty(item, parseInt(e.target.value, 10))}
-                       />
-                       <button className="removeBtn" onClick={() => this.removeFromCart(item)}> ❌ </button>
-                        </div>
+                    {this.state.isCartVis && (<h3 className="totalTxt">Total ${this.getCartTotal()}</h3>)}
+                    {this.state.isCartVis && this.state.cart.map((item) => (
+                        <div key={item.id} className="cartItemDiv">                         
+                            <img className="cartImage" src={item.image} alt={item.title} />
+                            <div className="cartInfo">
+                                <p>{item.title.slice(0, 9)}...  ${(item.price * item.qty).toFixed(2)} </p>                            
+                                <input 
+                                    type="number"
+                                    value={item.qty}
+                                    className="qtyInput"
+                                    onChange={(e) => this.adjustItemQty(item, parseInt(e.target.value, 10))}
+                                />
+                                <button className="removeBtn" onClick={() => this.removeFromCart(item)}> ❌ </button>
+                            </div>
                     </div>
                 ))}
                
