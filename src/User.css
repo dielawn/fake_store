@@ -14,7 +14,7 @@
 .qtyTxt {
     position: relative;
     top: -10px;
-    right: 10px;
+   
     background-color: green;
     color: white;
     width: 25px;
@@ -22,3 +22,59 @@
     border-radius: 50%;
     text-align: center;
 }
+
+
+.removeBtn {
+   background-color: white;   
+   border-radius: 50%;
+   align-content: center;
+   align-items: center;
+   text-align: center;
+    
+}
+
+.cartImage {
+    max-width: 50px;
+}
+
+.userContainer {
+    position: relative;
+}
+
+.cartDiv {
+    position: absolute;
+    top: 55px; /* Adjust based on your layout */
+    right: 20px;
+    width: 300px; /* Or percentage of the parent */
+    max-width: 100%;
+    background-color: white;
+    animation: expand 500ms ease-in-out;
+    transform-origin: top;
+    z-index: 10; /* Ensure it overlays other content */
+    overflow: scroll;
+    overflow-x: hidden;
+}
+
+@keyframes expand {
+    0% {
+        transform: scaleY(0);
+    }
+    
+    70% {
+        transform: scaleY(1.1);
+    }
+    
+    100% {
+        transform: scaleY(1);
+    }
+}
+
+.cartItemDiv {
+    position: absolute;
+    top: 50%; /* Center vertically */
+    left: 75%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Adjust for the element's own size */
+    /* Ensure width is set or controlled if necessary */
+}
+
+

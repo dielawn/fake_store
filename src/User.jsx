@@ -40,12 +40,10 @@ export default class User extends Component {
     removeFromCart(item) {
         this.setState(prevState => {
             const itemIndex = prevState.cart.findIndex(i => i.id === item.id)
-            if (item.id === itemIndex) {
-                //remove item object from cart array
-                const newCart = [...prevState.cart]
+            if (itemIndex !== -1) { 
+                const newCart = [...prevState.cart];
                 newCart.splice(itemIndex, 1)
-                //replace old cart with new
-                return{ cart: newCart}
+                return { cart: newCart }
             }
         })
     }
@@ -67,37 +65,38 @@ export default class User extends Component {
         this.setState(prevState => ({...prevState, isCartVis: !prevState.isCartVis}))
     }
     
-     render() {
+    render() {
         return (
-            <div>
+            <div className="userContainer">
                 {this.state.name && (
                     <div className="flex userDiv">
-                       <h3 className="userNameHeader">{this.state.name}</h3>     
+                       <h3 className="userNameHeader">Welcome {this.state.name},</h3>     
                        <button
                         onClick={() => this.setCartVis()}
                         className="material-symbols-outlined white">shopping_cart
                          </button>      
-                          {/* if there is stuff in the cart display the qty */}
                 {this.state.cart.length >= 1 && <p className="qtyTxt">{this.state.cart.length}</p>}             
+                
                     </div>
                 )}
-                <div  className="cartDiv">
-                {this.isCartVis && this.cart.map((item) => (
-                    <div>
+                <div className="cartDiv">
+                {this.state.isCartVis && this.state.cart.map((item) => (
+                    <div key={item.id} className="cartItemDiv"> 
+                        
+                        <img className="cartImage" src={item.image} alt={item.title} />
                         <p>{item.title.slice(0, 11)} {item.price * item.qty}</p>
                         <input 
                             type="number"
                             value={item.qty}
-                            onChange={(e) => this.adjustItemQty(item, e.target.value)}
+                            className="qtyInput"
+                            onChange={(e) => this.adjustItemQty(item, parseInt(e.target.value, 10))}
                         />
-                        <button
-                            onClick={this.removeFromCart(item)}> ❌ </button>
-                        
+                        <button className="removeBtn" onClick={() => this.removeFromCart(item)}> ❌ </button>
                     </div>
                 ))}
-               
+               {this.state.isCartVis && (<div>Total ${this.getCartTotal()}</div>)}
                 </div>
             </div>
         )
-     }
+    }
 }
