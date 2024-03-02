@@ -7,8 +7,7 @@ import UserContext from './UserContext'
 
 
 export function Nav() {
-    const {userName} = useContext(UserContext)
-    const {setUserName} = useContext(UserContext)
+    const {userName, setUserName, cart } = useContext(UserContext)
     const [inputName, setInputName] = useState('')
 
 
@@ -20,7 +19,7 @@ export function Nav() {
             </div>
             
             {userName !== '' ? 
-                <User userName={userName} />
+                <User userName={userName} cart={cart} />
                 :
                 <div className='flexColumn'>
                     <label className='userNameInput' htmlFor='userNameInput'>User Name:{' '} 

@@ -7,28 +7,18 @@ export default class User extends Component {
 
         this.state = {
             name: props.userName || 'Please Login',
-            cart: [],
+            cart: props.cart || [],
             isCartVis: false,
             total: 0,
         }
     }
 
-    addToCart(item) {
-        if (item.name !== '') {
-            this.setState(prevState => {
-                const itemIndex = prevState.cart.findIndex(i => i.id === item.id)
-                if (itemIndex > -1) {
-                    //item exists, update its quantity
-                    const newCart = [...prevState.cart]
-                    newCart[itemIndex].qty += item.qty
-                    return { ...prevState, cart: newCart }
-                } else {
-                    //item doesn't exist, add it to the cart
-                    return { ...prevState, cart: [...prevState.cart, item] }
-                }
-            })
+    componentDidUpdate(prevProps) {
+        if (prevProps.cart !== this.props.cart) {
+            this.setState({cart: this.props.cart })
         }
     }
+
 
     adjustItemQty(item, newQty) {
         
@@ -86,7 +76,9 @@ export default class User extends Component {
                        <button
                         onClick={() => this.setCartVis()}
                         className="material-symbols-outlined white">shopping_cart
-                         </button>                   
+                         </button>      
+                          {/* if there is stuff in the cart display the qty */}
+                {this.state.cart.length >= 1 && <p className="qtyTxt">{this.state.cart.length}</p>}             
                     </div>
                 )}
                 <div  className="cartDiv">
@@ -103,8 +95,7 @@ export default class User extends Component {
                         
                     </div>
                 ))}
-                {/* if there is stuff in the cart display the qty */}
-                {this.state.cart.length >= 1 && <p>{this.state.cart.length}</p>}
+               
                 </div>
             </div>
         )

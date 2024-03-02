@@ -1,16 +1,13 @@
 import './Store.css'
-import {  useContext } from "react";
+import React, {  useContext } from "react";
 import { Nav } from './Nav';
 import UserContext from './UserContext';
 
+
 export function Store() {
   
-    const {inventory} = useContext(UserContext)
-    const {setInventory} = useContext(UserContext)
-    const {userName} = useContext(UserContext)
-
-    const {loading} = useContext(UserContext)
-    const {error} = useContext(UserContext)
+    const {inventory, setInventory, userName, loading, error, addToCart, adjustQty} = useContext(UserContext)
+   
      
     function setQty(e, itemId) {
         setInventory(prevInv => prevInv.map(item => 
@@ -21,6 +18,10 @@ export function Store() {
     function handleDiscVis(itemId) {
         setInventory(prevInv => prevInv.map(item => 
             item.id === itemId ? {...item, isDescVis: !item.isDescVis} : item))
+    }
+
+    function pushToUserCart() {
+        //push item object from inventory to User.cart, maintain prev cart items
     }
    
     if (loading) return <p>Loading...</p>
@@ -53,7 +54,9 @@ export function Store() {
                         onChange={(e) => setQty(e, item.id)}
                          />
                     </label>
-                    <button>Add to Cart</button>
+                    <button
+                        onClick={() => addToCart(item)}
+                    >Add to Cart</button>
                 </div>
             ))}
         </div>

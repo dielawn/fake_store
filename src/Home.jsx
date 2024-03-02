@@ -6,14 +6,7 @@ import axios from 'axios'
 
 
 export default function Home() {
-  const {userName} = useContext(UserContext)
-  const {inventory} = useContext(UserContext)
-  const {setInventory} = useContext(UserContext)
-  const {setLoading} = useContext(UserContext)
-  const {loading} = useContext(UserContext)
-  const {error} = useContext(UserContext)
-  const {setError} = useContext(UserContext)
-
+  const {userName, inventory, setInventory, setLoading,loading, error, setError} = useContext(UserContext)
 
   const  [currentIndex, setCurrentIndex] = useState(0)
 
