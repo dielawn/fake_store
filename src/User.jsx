@@ -6,7 +6,7 @@ export default class User extends Component {
         super(props)
 
         this.state = {
-            name: props.userName || 'Please Login',
+            name: props.userName || 'Dude',
             cart: props.cart || [],
             isCartVis: false,
             total: 0,
@@ -57,7 +57,7 @@ export default class User extends Component {
         for (const item of this.state.cart) {
             total += item.price * item.qty
         }
-        return total
+        return total.toFixed(2)
      }
 
      setCartVis() {
@@ -81,28 +81,31 @@ export default class User extends Component {
                        <h3 className="userNameHeader">Welcome {this.state.name},</h3>     
                        <button
                         onClick={() => this.setCartVis()}
-                        className="material-symbols-outlined white">shopping_cart
+                        className="material-symbols-outlined white cartBtn" >shopping_cart
                          </button>      
                 {this.state.cart.length >= 1 && <p className="qtyTxt">{this.getCartQty()}</p>}
                     </div>
                 )}
                 <div className="cartDiv">
+                {this.state.isCartVis && (<h3 className="totalTxt">Total ${this.getCartTotal()}</h3>)}
                 {this.state.isCartVis && this.state.cart.map((item) => (
                     <div key={item.id} className="cartItemDiv"> 
                         
                         <img className="cartImage" src={item.image} alt={item.title} />
-                        <p>{item.title.slice(0, 11)} {item.price * item.qty}</p>
+                        <div className="cartInfo">
+                        <p>{item.title.slice(0, 9)}...  ${(item.price * item.qty).toFixed(2)} </p>
                        
-                        <input 
-                            type="number"
-                            value={item.qty}
-                            className="qtyInput"
-                            onChange={(e) => this.adjustItemQty(item, parseInt(e.target.value, 10))}
-                        />
-                        <button className="removeBtn" onClick={() => this.removeFromCart(item)}> ❌ </button>
+                       <input 
+                           type="number"
+                           value={item.qty}
+                           className="qtyInput"
+                           onChange={(e) => this.adjustItemQty(item, parseInt(e.target.value, 10))}
+                       />
+                       <button className="removeBtn" onClick={() => this.removeFromCart(item)}> ❌ </button>
+                        </div>
                     </div>
                 ))}
-               {this.state.isCartVis && (<div>Total ${this.getCartTotal()}</div>)}
+               
                 </div>
             </div>
         )

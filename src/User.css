@@ -34,7 +34,7 @@
 }
 
 .cartImage {
-    max-width: 50px;
+    max-height: 50px;
 }
 
 .userContainer {
@@ -44,17 +44,18 @@
 .cartDiv {
     position: absolute;
     max-height: 70vh;
-    top: 55px; /* Adjust based on your layout */
+    top: 70px; /* Adjust based on your layout */
     right: 20px;
     padding: 30px;
     background-color: white;
-    outline: solid 3px black;
+    /* border: solid 3px black; */
     border-radius: 7px;
     animation: expand 500ms ease-in-out;
     transform-origin: top;
-    z-index: 10; /* Ensure it overlays other content */
-    overflow-y: scroll;
+    z-index: 10; 
+   
     overflow-x: hidden;
+    
 }
 
 @keyframes expand {
@@ -72,12 +73,35 @@
 }
 
 .cartItemDiv {
+    display: flex;
+    border-bottom: solid 1px black;
+    padding: 20px;
     position: absolute;
-    top: 100px; /* Center vertically */
-    left: 75%; /* Center horizontally */
-    transform: translate(-50%, -50%); /* Adjust for the element's own size */
-    /* Ensure width is set or controlled if necessary */
-
+    top: 50px; 
+    left: 55%;
+    transform: translate(-50%, -50%); 
+    justify-content: space-around;
 }
 
+.cartInfo {
+    display: flex;
+    font-size: .8em;
+}
+
+.totalTxt {
+    position: absolute;
+    padding: 10px;
+    top: -30px;
+    border-bottom: solid 3px black;
+}
+.cartBtn:hover{
+    border: none;
+    color: white;
+    background-color: black;
+}
+.cartBtn:focus {
+    color: white;
+    background-color: black;
+   outline: none;
+}
 
