@@ -11,9 +11,21 @@
     padding: 25px;
 }
 
-.navLink {
+.navLink {    
+    margin: 30px;
     
-    padding: 20px;
-   
+}
+
+.flexColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.userNameInput {
+    min-height: 30px;
+    border-radius: 7px;
+    font-size: 1em;
+    min-width: 150px;
 }
 

@@ -3,13 +3,17 @@ import Home from './Home'
 import { Store } from './Store'
 import Cart from './Cart'
 import { Nav } from './Nav'
-function App() {
+import User from './User'
+import { useState } from 'react'
 
+
+function App() {
+  const [userName, setUserName] = useState('')
 
   return (
     <>
-   <Nav />
-    <Home />
+   <Nav userName={userName} setUserName={setUserName} />
+    {/* <Home /> */}
     {/* <Store />
     <Cart /> */}
     

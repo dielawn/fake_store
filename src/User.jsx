@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import './Class.css'
+import './User.css'
 
 export default class User extends Component {
     constructor(props) {
@@ -73,18 +73,19 @@ export default class User extends Component {
      }
 
      setCartVis() {
+        console.log('cart vis changed')
         this.setState(prevState => ({...prevState, isCartVis: !prevState.isCartVis}))
     }
     
      render() {
         return (
-            <>
+            <div>
                 {this.state.name && (
-                    <div className="cartIcon">
-                       <h3>{this.state.name}</h3>     
+                    <div className="flex userDiv">
+                       <h3 className="userNameHeader">{this.state.name}</h3>     
                        <button
                         onClick={() => this.setCartVis()}
-                        className="material-symbols-outlined">shopping_cart
+                        className="material-symbols-outlined white">shopping_cart
                          </button>                   
                     </div>
                 )}
@@ -105,7 +106,7 @@ export default class User extends Component {
                 {/* if there is stuff in the cart display the qty */}
                 {this.state.cart.length >= 1 && <p>{this.state.cart.length}</p>}
                 </div>
-            </>
+            </div>
         )
      }
 }

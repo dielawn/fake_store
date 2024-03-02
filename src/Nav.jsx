@@ -5,31 +5,33 @@ import { useState } from 'react'
 
 
 
-export function Nav() {
-    const [userName, setUserName] = useState('')
+export function Nav({userName, setUserName}) {
+    
     const [inputName, setInputName] = useState('')
 
 
     return (
         <div className='flex navBar'>
-            <div>
+            <div className='linkDiv'>
                 <Link className='navLink' to='/home'>Home</Link>
                 <Link className='navLink' to="/store">Store</Link>
             </div>
-            <Link to='/cart'>Cart</Link>
+            
             {userName !== '' ? 
-                <User  userName={userName} />
+                <User userName={userName} />
                 :
-                <>
-                    <label htmlFor='userNameInput'>User Name:
+                <div className='flexColumn'>
+                    <label className='userNameInput' htmlFor='userNameInput'>User Name:{' '} 
                     <input 
+                        type='text'
+                        className='userNameInput'
                         id='userNameInput'
                         value={inputName}
                         onChange={(e) => setInputName(e.target.value)}
                     />                    
                     </label>
-                    <button onClick={() => setUserName(inputName)}>Login</button>
-                </>
+                    <button className='loginBtn' onClick={() => setUserName(inputName)}>Login</button>
+                </div>
                     }
                     
             

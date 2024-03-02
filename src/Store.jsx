@@ -8,7 +8,7 @@ import { Nav } from './Nav';
 
 export function Store() {
     const [inventory, setInventory] = useState([])
-    const [cart, setCart] = useState([])
+    const [currentUser, setCurrentUser] = useState('')
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
      
@@ -69,11 +69,7 @@ export function Store() {
                         <span className="material-symbols-outlined" >expand_less</span> 
                         : 
                         <>{item.description.slice(0, 20) + '...'}<span className="material-symbols-outlined" >expand_more</span></>}
-                    </button>
-                 
-                  
-                        
-                   
+                    </button>                   
                     <p>${item.price.toFixed(2)}</p>
                     <label htmlFor={'qtyInput' + item.id}>Qty 
                     <input 
