@@ -1,14 +1,15 @@
 import './Store.css'
 import axios from 'axios'
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Nav } from './Nav';
+import UserContext from './UserContext';
 
 
 // const todo =  `nav bar, item cards- title, qty(input), price, add to cart btn`
 
 export function Store() {
     const [inventory, setInventory] = useState([])
-    const [currentUser, setCurrentUser] = useState('')
+    const {userName} = useContext(UserContext)
     const [loading, setLoading] = useState(true)
     const [error, setError] =  useState(null)
      
@@ -57,7 +58,7 @@ export function Store() {
     return (
 
        <div>
-        <Nav />
+        <Nav userName={userName}/>
          <div className='productsDiv'>
             {inventory && inventory.map((item) => (                
                 <div key={item.title.slice(0, 4) + item.id} className='itemCard'>

@@ -1,12 +1,14 @@
 import { Link } from 'react-router-dom'
 import User from './User'
 import './Nav.css'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
+import UserContext from './UserContext'
 
 
 
-export function Nav({userName, setUserName}) {
-    
+export function Nav() {
+    const {userName} = useContext(UserContext)
+    const {setUserName} = useContext(UserContext)
     const [inputName, setInputName] = useState('')
 
 

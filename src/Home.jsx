@@ -1,12 +1,15 @@
+import { useContext } from 'react'
 import './Home.css'
 import { Nav } from './Nav'
+import UserContext from './UserContext'
 
 
 export default function Home() {
+  const {userName} = useContext(UserContext)
     return (
        <div>
-         
-
+        
+      <Nav userName={userName} />
         <div className='homeDiv'>
       <h1>Fakest of Stores</h1>
 

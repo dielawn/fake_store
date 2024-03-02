@@ -1,24 +1,16 @@
 import './App.css'
-import Home from './Home'
-import { Store } from './Store'
-import Cart from './Cart'
-import { Nav } from './Nav'
-import User from './User'
-import { useState } from 'react'
-
+import React, { useState } from 'react';
+import Router from './Router'; // Make sure to import Router
+import UserContext from './UserContext';
 
 function App() {
-  const [userName, setUserName] = useState('')
+  const [userName, setUserName] = useState('');
 
   return (
-    <>
-   <Nav userName={userName} setUserName={setUserName} />
-    {/* <Home /> */}
-    {/* <Store />
-    <Cart /> */}
-    
-    </>           
-  )
+    <UserContext.Provider value={{ userName, setUserName }}>
+      <Router /> {/* Router is now inside UserContext.Provider */}
+    </UserContext.Provider>
+  );
 }
 
-export default App
+export default App;
