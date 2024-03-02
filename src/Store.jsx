@@ -9,8 +9,11 @@ export function Store() {
     const {inventory} = useContext(UserContext)
     const {setInventory} = useContext(UserContext)
     const {userName} = useContext(UserContext)
-    const [loading, setLoading] = useState(true)
-    const [error, setError] =  useState(null)
+
+    const {loading} = useContext(UserContext)
+    const {error} = useContext(UserContext)
+    // const [loading, setLoading] = useState(true)
+    // const [error, setError] =  useState(null)
      
 
     function setQty(e, itemId) {
@@ -24,31 +27,8 @@ export function Store() {
             item.id === itemId ? {...item, isDescVis: !item.isDescVis} : item))
     }
 
- 
-    
-    useEffect(() => {
-        const ids = [...Array(20).keys()].map(i => i + 1)
-        const fetchItems = async () => {
-            try {
-                const response = await Promise.all(
-                    ids.map(id => axios.get(`https://fakestoreapi.com/products/${id}`))
-                ) 
-                const newItem = response.map(res => ({
-                    ...res.data,
-                    qty: 1,
-                    isDescVis: false,
-                }))
+     
 
-                setInventory(newItem)
-            } catch (err) {
-                setError(err.message)
-            } finally {
-                setLoading(false)
-            }
-        }
-
-        fetchItems()
-    }, [])
     
     
     if (loading) return <p>Loading...</p>

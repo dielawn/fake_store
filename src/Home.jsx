@@ -2,13 +2,44 @@ import { useContext, useState, useEffect } from 'react'
 import './Home.css'
 import { Nav } from './Nav'
 import UserContext from './UserContext'
+import axios from 'axios'
 
 
 export default function Home() {
   const {userName} = useContext(UserContext)
   const {inventory} = useContext(UserContext)
+  const {setInventory} = useContext(UserContext)
+  const {setLoading} = useContext(UserContext)
+  const {setError} = useContext(UserContext)
+
+  // const [loading, setLoading] = useState(true)
+  // const [error, setError] =  useState(null)
 
   const  [currentIndex, setCurrentIndex] = useState(0)
+
+  useEffect(() => {
+    const ids = [...Array(20).keys()].map(i => i + 1)
+    const fetchItems = async () => {
+        try {
+            const response = await Promise.all(
+                ids.map(id => axios.get(`https://fakestoreapi.com/products/${id}`))
+            ) 
+            const newItem = response.map(res => ({
+                ...res.data,
+                qty: 1,
+                isDescVis: false,
+            }))
+
+            setInventory(newItem)
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    fetchItems()
+}, [])
 
   useEffect(() => {
     const interval = setInterval(() => {
