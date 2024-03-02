@@ -1,13 +1,25 @@
-import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 
 import App from './App';
+import React from 'react';
 
-describe('App', () => {
-  it('renders headline', () => {
-    render(<App />);
-    expect(screen.getByRole('heading')).toHaveTextContent(/our first test/i)
+describe('App component tests', () => {
+  it('adds an item to cart', async () => {
+    render(<App />)
+    const addItemButton = await screen.findByRole('button', {name: /add item/i})
+
+    fireEvent.click(addItemButton)
+
+    const cartItem = await screen.findByText(/item name/i)
+    expect(cartItem).toBeInTheDocument()
    
-    // check if App components renders headline
-  });
-});
+  })
+
+  it('checks loading state', async () => {
+    render(<App />)
+    const loadTxt = await screen.findByText(/loading.../i)
+    expect(loadTxt).toBeInTheDocument()
+  })
+
+})
