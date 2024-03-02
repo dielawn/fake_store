@@ -19,8 +19,11 @@ export default class User extends Component {
         if (prevProps.cart !== this.props.cart) {
             this.setState({cart: this.props.cart })
         }
+        if (this.props.cart.length <= 0 && this.state.isCartVis) {
+            this.setState({ isCartVis: false })
+        }
     }
-
+    
 
     adjustItemQty(item, newQty) {
         

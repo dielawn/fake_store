@@ -6,7 +6,7 @@ import UserContext from './UserContext';
 
 export function Store() {
   
-    const {inventory, setInventory, userName, loading, error, addToCart, adjustQty} = useContext(UserContext)
+    const {inventory, setInventory, userName, loading, error, addToCart, } = useContext(UserContext)
    
      
     function setQty(e, itemId) {
