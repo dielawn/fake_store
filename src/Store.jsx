@@ -4,9 +4,6 @@ import { useState, useEffect, useContext } from "react";
 import { Nav } from './Nav';
 import UserContext from './UserContext';
 
-
-// const todo =  `nav bar, item cards- title, qty(input), price, add to cart btn`
-
 export function Store() {
     // const [inventory, setInventory] = useState([])
     const {inventory} = useContext(UserContext)
