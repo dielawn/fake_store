@@ -1,67 +1,39 @@
-import { render, screen, waitFor, act } from '@testing-library/react';
-import { describe, it, expect, beforeEach } from 'vitest';
-import {Store} from './Store'
-import axios from 'axios';
+import { render, fireEvent, screen } from '@testing-library/react';
+import { Store } from './Store';
+import UserContext from './UserContext';
 
-// Setup axios mock at the top
-vi.mock('axios', () => ({
-    __esModule: true, // This line is crucial for making it recognized as a module with a default export
-    default: {
-      get: vi.fn(),
-    },
-  }));
+const customRender = (ui, { providerProps, ...renderOptions }) => {
+  return render(
+    <UserContext.Provider value={providerProps}>{ui}</UserContext.Provider>,
+    renderOptions
+  )
+}
+
   
   describe('Store Component', () => {
-    beforeEach(() => {
-      vi.resetAllMocks()
+    it('displays loading state', () => {
+      const providerProps = { loading: true, inventory: [], error: null }
+      customRender(<Store />, { providerProps })
+      expect(screen.getByText(/loading.../i)).toBeInTheDocument()
     })
-  
-    it('displays loading state initially', async () => {        
-
-        await waitFor(() => {
-            axios.get.mockResolvedValueOnce({ data: [] })
-            render(<Store />)
-            expect(screen.getByText(/Loading.../i)).toBeInTheDocument()
-          })        
-      })  
-  
-    it('displays error message on fetch failure', async () => {
-      // Adjust the mock for this specific test to simulate a rejection
-      axios.get.mockRejectedValue(new Error('Failed to fetch'))  
-      render(<Store />);
-      const errorElement = await screen.findByText(/Error:/i)
-      expect(errorElement).toBeInTheDocument()
+    
+    it('displays error message', () => {
+      const providerProps = { loading: false, inventory: [], error: 'Test Error' }
+      customRender(<Store />, { providerProps })
+      expect(screen.getByText(/error: test error/i)).toBeInTheDocument()
     })
-
-    it('displays items after successful fetch', async () => {
-        // Mock axios.get to resolve with an array of items
-        axios.get.mockImplementation(url => 
-          Promise.resolve({
-            data: {
-              id: url.slice(-1), // Example to dynamically create item IDs based on URL
-              title: "Test Item " + url.slice(-1),
-              price: 10.00 + parseInt(url.slice(-1), 10),
-              description: "description text...",
-              category: "item category",
-              image: "image url",
-              rating: { rate: 3.9, count: 120 }
-            }
-          })
-        )
-      
-        render(<Store />)
-      
-        // Wait for the items to be fetched and rendered
-        await waitFor(() => {
-          //check for the presence of multiple items based on the mocked fetch
-          //adjust this based on the actual number of items you expect to fetch and render
-          [...Array(20).keys()].forEach(async (i) => {
-            const itemTitle = await screen.findByText(new RegExp("Test Item " + (i + 1), "i"))
-            expect(itemTitle).toBeInTheDocument()
-          
-          })
-        })
-      })
-      
+    
+    it('renders inventory items when loaded', () => {
+      const providerProps = {
+        loading: false,
+        inventory: [{ id: 1, title: 'Test Item', price: 10, qty: 1, isDescVis: false, description: 'Test Description', image: 'test.jpg' }],
+        error: null,
+        addToCart: jest.fn(),
+      }
+      customRender(<Store />, { providerProps })
+      expect(screen.getByText(/test item/i)).toBeInTheDocument()
+      expect(screen.getByText(/\$10.00/i)).toBeInTheDocument()
+    })
+    
   })
   
