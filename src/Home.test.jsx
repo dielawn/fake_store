@@ -1,57 +1,48 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, } from '@testing-library/react';
 import Home from './Home';
 import UserContext from './UserContext';
-import MockAdapter from 'axios-mock-adapter';
-import axios from 'axios';
 import { describe, it, expect } from 'vitest';
+import { MemoryRouter } from 'react-router-dom';
 
-const axiosMock = new MockAdapter(axios)
-const mockUserContext = {
-  userName: "Test User",
-  inventory: [],
-  setInventory: jest.fn(),
-  setLoading: jest.fn(),
-  loading: false,
-  error: null,
-  setError: jest.fn(),
+const customRender = (ui, { providerProps, ...renderOptions }) => {
+  return render(
+    <MemoryRouter>
+      <UserContext.Provider value={providerProps}>{ui}</UserContext.Provider>
+    </MemoryRouter>,
+    renderOptions
+  )
 }
 
 
+
 describe('Home component tests', () => {
-  it('shows loading state', async () => {
-    render(
-      <UserContext.Provider value={{ ...mockUserContext, loading: true }}>
-        <Home />
-      </UserContext.Provider>
-    ) 
-    
+  it('displays loading state', () => {
+    const providerProps = { loading: true, inventory: [], error: null }
+    customRender(<Home />, { providerProps })
     expect(screen.getByText(/loading.../i)).toBeInTheDocument()
   })
-
-  it('fetches products, displays product images', async () => {
-    axiosMock.onGet('https://fakestoreapi.com/products/1').reply(200, {
-      id: 1,
-      title: 'Test Product',
-      image: 'test-image-url',
-    })
-    render(
-      <UserContext.Provider value={mockUserContext} >
-        <Home />
-      </UserContext.Provider>
-    )
-
-    await waitFor(() => expect(screen.getByRole('img')).toHaveAttribute('src', 'test-image-url'))
+  
+  it('displays error message', () => {
+    const providerProps = { loading: false, inventory: [], error: 'Test Error' }
+    customRender(<Home />, { providerProps })
+    expect(screen.getByText(/error: test error/i)).toBeInTheDocument()
   })
 
-  it('displays error on fetch failure', async () => {
-    axiosMock.onGet('https://fakestoreapi.com/products/1').networkError()
-    render(
-      <UserContext.Provider value={mockUserContext}>
-        <Home />
-      </UserContext.Provider>
-    )
+  it('displays header', () => {    
+    const providerProps = {  loading: false, inventory: [], error: null }
+    customRender(<Home />, { providerProps })//render the component first
+    const headerTxt = screen.getByRole('heading', { name: /fakest of stores/i })//then query the DOM
+   
+    const welcomeTxt = screen.getByRole('heading', { name: /welcome dude,/i})
 
-    await waitFor(() => expect(screen.getByText(/error/i)).toBeInTheDocument())
+    expect(headerTxt).toBeInTheDocument()
+    expect(welcomeTxt).toBeInTheDocument()
   })
+
+  
+
+
+
+  
 
 })

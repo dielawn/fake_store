@@ -34,8 +34,6 @@ export function Nav() {
                     <button className='loginBtn' onClick={() => setUserName(inputName)}>Login</button>
                 </div>
                     }
-                    
-            
         </div>        
     )
 }

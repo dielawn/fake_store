@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
 import { Nav } from './Nav';
 import UserContext from './UserContext';
+import userEvent from '@testing-library/user-event';
 
 const customRender = (ui, { providerProps, ...options }) => {
   return render(
@@ -17,8 +18,8 @@ describe('Nav component', () => {
     const providerProps = {
       userName: '',
       cart: [],
-      setUserName: jest.fn(),
-      removeFromAppCart: jest.fn(),
+      setUserName: vi.fn(),
+      removeFromAppCart: vi.fn(),
     }
     customRender(<Nav />, { providerProps })
   
@@ -26,13 +27,13 @@ describe('Nav component', () => {
     expect(screen.getByText(/store/i)).toBeInTheDocument()
   })
 
-  it('allows the user to log in', async () => {
-    const setUserName = jest.fn();
+  it('text in input, login btn clicked, setUserName called', async () => {
+    const setUserName = vi.fn();
     const providerProps = {
       userName: '',
       cart: [],
       setUserName,
-      removeFromAppCart: jest.fn(),
+      removeFromAppCart: vi.fn(),
     }
     customRender(<Nav />, { providerProps })
   
@@ -49,12 +50,12 @@ describe('Nav component', () => {
     const providerProps = {
       userName: 'John Doe',
       cart: [],
-      setUserName: jest.fn(),
-      removeFromAppCart: jest.fn(),
+      setUserName: vi.fn(),
+      removeFromAppCart: vi.fn(),
     }
     customRender(<Nav />, { providerProps })
   
     expect(screen.queryByLabelText(/user name:/i)).not.toBeInTheDocument()
-    expect(screen.getByText('John Doe')).toBeInTheDocument()
+    expect(screen.getByText('Welcome John Doe,')).toBeInTheDocument()
   })
 })

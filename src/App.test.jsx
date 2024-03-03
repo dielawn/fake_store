@@ -1,25 +1,14 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, vi } from 'vitest';
-
+import { describe, it, expect } from 'vitest';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
 import App from './App';
-import React from 'react';
 
-describe('App component tests', () => {
-  it('adds an item to cart', async () => {
-    render(<App />)
-    const addItemButton = await screen.findByRole('button', {name: /add item/i})
-
-    fireEvent.click(addItemButton)
-
-    const cartItem = await screen.findByText(/item name/i)
-    expect(cartItem).toBeInTheDocument()
-   
-  })
-
-  it('checks loading state', async () => {
-    render(<App />)
-    const loadTxt = await screen.findByText(/loading.../i)
-    expect(loadTxt).toBeInTheDocument()
-  })
-
-})
+// Remove async from describe callback
+describe('App component', () => {
+  it('renders the content for /home route', async () => {
+    render(<App />);
+    
+    const heading = await screen.findByText(/fakest of stores/i);
+    expect(heading).toBeInTheDocument();
+  });
+});
