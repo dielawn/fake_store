@@ -77,5 +77,5 @@ Contact
 dielawn merkill - @DielawnM - dielawnmerkill@gmail.com
 
 Project Link: https://github.com/dielawn/fake-store
-
+Live Preview: https://main--fakeststore.netlify.app/home
 Inspiration Credit: The Odin Project https://www.theodinproject.com/
