@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom'; // Import MemoryRouter
-import { Nav } from './Nav';
-import UserContext from './UserContext';
+import { Nav } from '../src/Nav';
+import UserContext from '../src/UserContext';
 import userEvent from '@testing-library/user-event';
 
 const customRender = (ui, { providerProps, ...options }) => {

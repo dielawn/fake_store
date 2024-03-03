@@ -1,6 +1,6 @@
 import { render, screen, waitFor, } from '@testing-library/react';
-import Home from './Home';
-import UserContext from './UserContext';
+import Home from '../src/Home';
+import UserContext from '../src/UserContext';
 import { describe, it, expect } from 'vitest';
 import { MemoryRouter } from 'react-router-dom';
 

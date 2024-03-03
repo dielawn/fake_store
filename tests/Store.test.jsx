@@ -1,8 +1,8 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { Store } from './Store';
-import UserContext from './UserContext';
+import { Store } from '../src/Store';
+import UserContext from '../src/UserContext';
 
 const customRender = (ui, { providerProps, ...renderOptions }) => {
   return render(
