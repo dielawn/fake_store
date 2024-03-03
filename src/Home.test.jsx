@@ -31,8 +31,7 @@ describe('Home component tests', () => {
   it('displays header', () => {    
     const providerProps = {  loading: false, inventory: [], error: null }
     customRender(<Home />, { providerProps })//render the component first
-    const headerTxt = screen.getByRole('heading', { name: /fakest of stores/i })//then query the DOM
-   
+    const headerTxt = screen.getByRole('heading', { name: /fakest of stores/i })   
     const welcomeTxt = screen.getByRole('heading', { name: /welcome dude,/i})
 
     expect(headerTxt).toBeInTheDocument()

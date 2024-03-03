@@ -1,14 +1,26 @@
 import { describe, it, expect } from 'vitest';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from './App';
+import UserContext from './UserContext';
+
+const customRender = (ui, { providerProps, ...renderOptions }) => {
+  return render(   
+      <UserContext.Provider value={providerProps}>{ui}</UserContext.Provider>,    
+    renderOptions
+  )
+}
 
 // Remove async from describe callback
 describe('App component', () => {
-  it('renders the content for /home route', async () => {
-    render(<App />);
+  it('displays error header after async operation', async () => {
+    const providerProps = { loading: true, inventory: [], error: null }
+    customRender(<App />, {providerProps});
     
-    const heading = await screen.findByText(/fakest of stores/i);
-    expect(heading).toBeInTheDocument();
-  });
-});
+    // Wait for the header to be present in the document
+    await waitFor(() => {
+      const headerTxt = screen.getByRole('heading', { name: /Unexpected Application Error!/i });
+      expect(headerTxt).toBeInTheDocument()
+    })
+  })
+})
