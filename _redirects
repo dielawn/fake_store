@@ -1,5 +1,6 @@
-# Redirects from what the browser requests to what we serve
-/home   /   200
-/store  /store  200
-/*      /index.html   200
+# Redirect root directly to /home
+/ /home 301!
+
+# Handle client-side routing: send all requests to index.html
+/* /index.html 200
 
